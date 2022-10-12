@@ -14,11 +14,11 @@ default_args = {
     "retry_delay": timedelta(minutes=5),
 }
 
-example_workflow = DAG('kube-operator',
+example_workflow = DAG('complex-tasks',
                          default_args=default_args,
                          schedule_interval=timedelta(days=1))
 with example_workflow:
-    t1 = KubernetesPodOperator(namespace='airflow',
+    t1 = KubernetesPodOperator(namespace='default',
                                image="ubuntu:16.04",
                                cmds=["bash", "-cx"],
                                arguments=["echo", "hello world"],
@@ -29,7 +29,7 @@ with example_workflow:
                                hostnetwork=False,
                                )
 
-    t2 = KubernetesPodOperator(namespace='airflow',
+    t2 = KubernetesPodOperator(namespace='default',
                                image="ubuntu:16.04",
                                cmds=["bash", "-cx"],
                                arguments=["echo", "hello world"],
@@ -40,7 +40,7 @@ with example_workflow:
                                hostnetwork=False,
                                )
 
-    t3 = KubernetesPodOperator(namespace='airflow',
+    t3 = KubernetesPodOperator(namespace='default',
                                image="ubuntu:16.04",
                                cmds=["bash", "-cx"],
                                arguments=["echo", "hello world"],
@@ -51,7 +51,7 @@ with example_workflow:
                                hostnetwork=False,
                                )
 
-    t4 = KubernetesPodOperator(namespace='airflow',
+    t4 = KubernetesPodOperator(namespace='default',
                                image="ubuntu:16.04",
                                cmds=["bash", "-cx"],
                                arguments=["echo", "hello world"],
