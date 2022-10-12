@@ -19,7 +19,7 @@ example_workflow = DAG('complex-tasks',
                          schedule_interval=timedelta(days=1))
 with example_workflow:
     t1 = KubernetesPodOperator(namespace='default',
-                               image="ubuntu:16.04",
+                               image="alpine",
                                cmds=["bash", "-cx"],
                                arguments=["echo", "hello world"],
                                labels={'runner': 'airflow'},
@@ -30,7 +30,7 @@ with example_workflow:
                                )
 
     t2 = KubernetesPodOperator(namespace='default',
-                               image="ubuntu:16.04",
+                               image="alpine",
                                cmds=["bash", "-cx"],
                                arguments=["echo", "hello world"],
                                labels={'runner': 'airflow'},
@@ -41,7 +41,7 @@ with example_workflow:
                                )
 
     t3 = KubernetesPodOperator(namespace='default',
-                               image="ubuntu:16.04",
+                               image="alpine",
                                cmds=["bash", "-cx"],
                                arguments=["echo", "hello world"],
                                labels={'runner': 'airflow'},
@@ -52,7 +52,7 @@ with example_workflow:
                                )
 
     t4 = KubernetesPodOperator(namespace='default',
-                               image="ubuntu:16.04",
+                               image="alpine",
                                cmds=["bash", "-cx"],
                                arguments=["echo", "hello world"],
                                labels={'runner': 'airflow'},
