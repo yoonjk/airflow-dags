@@ -6,7 +6,7 @@ from airflow.contrib.operators.kubernetes_pod_operator import KubernetesPodOpera
 default_args = {
     "owner": "airflow",
     "depends_on_past": False,
-    "start_date": datetime(2015, 6, 1),
+    "start_date": datetime(2022, 10, 12),
     "email": ["airflow@airflow.com"],
     "email_on_failure": False,
     "email_on_retry": False,
