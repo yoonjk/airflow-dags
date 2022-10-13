@@ -14,7 +14,7 @@ with DAG(
     dag_id=DAG_NAME,
     default_args={"retries": 2},
     start_date=datetime.datetime(2022, 1, 1),
-    schedule="@once",
+    schedule_interval="@once",
     tags=['example'],
 ) as dag:
 
