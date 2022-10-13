@@ -1,50 +1,48 @@
-import json
-from typing import Dict
+"""Example DAG demonstrating the usage of the XComArgs."""
+from __future__ import annotations
+
+import logging
 
 import pendulum
-from airflow.decorators import dag, task
+
+from airflow import DAG
+from airflow.decorators import task
+from airflow.operators.bash import BashOperator
+
+log = logging.getLogger(__name__)
 
 
-# 1. Define a dag using the @dag decorator
-@dag(
-    schedule_interval=None,
-    start_date=pendulum.datetime(2022, 10, 13, tz="UTC"),
-    tags=["example"],
-)
-def example_taskflow_api():
-
-    # 2. Define tasks using the @task decorator
-    @task()
-    def extract() -> Dict[str, int]:
-        data_string = '{"land1": 80, "land2": 75, "land3": 19}'
-
-        land_data_dict = json.loads(data_string)
-
-        return land_data_dict
-
-    @task()
-    def transform(land_data_dict: Dict[str, int]) -> Dict[str, int]:
-        total_value = 0
-        multi_value = 1
-        for value in land_data_dict.values():
-            total_value += value
-            multi_value *= value
-
-        return {"total_value": total_value, "multi_value": multi_value}
-
-    @task()
-    def load_total(total_value: int) -> None:
-        print("Total value is: %d" % total_value)
-
-    @task()
-    def load_multiple(multiple_value: int) -> None:
-        print("Multiple value is: %d" % multiple_value)
-
-    # 3. Define data (task) dependencies
-    land_data = extract()
-    order_summary = transform(land_data)
-    load_total(order_summary["total_value"])
-    load_multiple(order_summary["multi_value"])
+@task
+def generate_value():
+    """Empty function"""
+    return "Bring me a shrubbery!"
 
 
-dag = example_taskflow_api()
+@task
+def print_value(value, ts=None):
+    """Empty function"""
+    log.info("The knights of Ni say: %s (at %s)", value, ts)
+
+
+with DAG(
+    dag_id='example_xcom_args',
+    start_date=pendulum.datetime(2021, 1, 1, tz="UTC"),
+    catchup=False,
+    schedule=None,
+    tags=['example'],
+) as dag:
+    print_value(generate_value())
+
+with DAG(
+    "example_xcom_args_with_operators",
+    start_date=pendulum.datetime(2021, 1, 1, tz="UTC"),
+    catchup=False,
+    schedule=None,
+    tags=['example'],
+) as dag2:
+    bash_op1 = BashOperator(task_id="c", bash_command="echo c")
+    bash_op2 = BashOperator(task_id="d", bash_command="echo c")
+    xcom_args_a = print_value("first!")
+    xcom_args_b = print_value("second!")
+
+    bash_op1 >> xcom_args_a >> xcom_args_b >> bash_op2
