@@ -11,7 +11,8 @@ default_args = {
     catchup=False,
     schedule_interval=None,
 )
-def example_dag:
+
+def example_dag():
     @task()
     def hello_world() -> str:
         return "hello, world!"
