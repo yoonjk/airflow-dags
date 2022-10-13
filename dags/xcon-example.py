@@ -25,4 +25,4 @@ def example_dag():
     msg = hello_world()
     display(msg)
 
-example_dag = example_dag()
+example_dag()
