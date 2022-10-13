@@ -12,7 +12,7 @@ default_args = {
     "start_date": datetime(2019, 7, 1),
     "retries": 1,
 }
-dag = DAG("mk_subdag_tutorial"
+dag = DAG("subdag_tutorial"
         ,default_args=default_args
         ,schedule_interval="@once")
 
