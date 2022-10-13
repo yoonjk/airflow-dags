@@ -41,4 +41,4 @@ with DAG(
         task_id='end',
     )
 
-    start >> section_1 >> some_other_task >> section_2 >> 
+    start >> section_1 >> some_other_task >> section_2 >> end
