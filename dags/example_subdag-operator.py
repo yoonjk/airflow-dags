@@ -5,7 +5,6 @@ from __future__ import annotations
 import datetime
 
 from airflow import DAG
-from subdag import subdag
 from airflow.operators.empty import EmptyOperator
 from airflow.operators.subdag import SubDagOperator
 
